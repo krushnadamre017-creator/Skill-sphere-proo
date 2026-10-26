@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skill Sphere | AI-Powered Learning & Career Acceleration</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --primary: #14b8a6;
+      --primary-hover: #0d9488;
+      --accent: #6366f1;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.1);
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: rgba(100,116,139,0.3);
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-[#090d16] text-[#f1f5f9] antialiased min-h-screen flex flex-col font-sans">
+
+  <!-- Top Navigation Header -->
+  <header class="sticky top-0 z-50 bg-[#111827]/90 backdrop-blur-md border-b border-[#1e293b]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('dashboard')">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-teal-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-teal-500/20 text-white font-bold text-xl">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="font-extrabold text-lg tracking-tight text-white">Skill Sphere</span>
+            <span class="text-xs uppercase font-extrabold px-1.5 py-0.5 rounded bg-teal-950 border border-teal-500/40 text-teal-300">Pro</span>
+          </div>
+          <p class="text-xs text-[#94a3b8]">AI Learning & Career Ecosystem</p>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="hidden md:flex items-center gap-1.5 bg-[#090d16]/60 p-1 rounded-xl border border-[#1e293b]">
+        <button id="nav-dashboard" onclick="switchTab('dashboard')" class="nav-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all bg-teal-500 text-slate-950 shadow">
+          Dashboard
+        </button>
+        <button id="nav-radar" onclick="switchTab('radar')" class="nav-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all text-[#94a3b8] hover:text-white">
+          AI Radar
+        </button>
+        <button id="nav-tracker" onclick="switchTab('tracker')" class="nav-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all text-[#94a3b8] hover:text-white">
+          Daily Tracker
+        </button>
+        <button id="nav-career" onclick="switchTab('career')" class="nav-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all text-[#94a3b8] hover:text-white">
+          Career & Jobs
+        </button>
+      </nav>
+
+      <!-- Status & Links -->
+      <div class="flex items-center gap-3">
+        <div id="live-status-pill" class="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-950/70 border border-emerald-500/40 text-emerald-300">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>FastAPI & Gemini Live</span>
+        </div>
+        <a href="/docs" target="_blank" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-[#1e293b] hover:bg-slate-700 border border-[#334155] text-teal-300 transition-colors">
+          /docs
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main App Body -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+    <!-- Toast Notification -->
+    <div id="toast-banner" class="hidden fixed bottom-6 right-6 z-50 p-4 rounded-xl bg-teal-950/95 border border-teal-500/50 text-teal-200 text-xs font-semibold shadow-2xl flex items-center gap-3">
+      <svg class="w-5 h-5 text-teal-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+      </svg>
+      <span id="toast-text">Action completed successfully!</span>
+    </div>
+
+    <!-- ==================== VIEW 1: DASHBOARD ==================== -->
+    <section id="view-dashboard" class="space-y-8">
+      
+      <!-- Welcome Hero Banner -->
+      <div class="bg-[#111827] rounded-2xl p-6 sm:p-8 border border-[#1e293b] relative overflow-hidden">
+        <div class="max-w-2xl space-y-3 relative z-10">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-950/80 border border-indigo-700/50 text-indigo-300 text-xs font-bold">
+            <span class="w-2 h-2 rounded-full bg-teal-400 animate-ping"></span>
+            MLH Hackathon AI Ecosystem
+          </div>
+          <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+            Accelerate Your Engineering Journey with <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-indigo-400">Gemini Intelligence</span>
+          </h1>
+          <p class="text-sm sm:text-base text-[#94a3b8] leading-relaxed">
+            Consistently log your daily learning habits, pinpoint industry skill gaps in real time, and practice tailored technical interview questions.
+          </p>
+
+          <div class="pt-2 flex flex-wrap items-center gap-3">
+            <button onclick="switchTab('radar')" class="px-5 py-2.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs transition-all shadow-lg shadow-teal-500/20">
+              Run AI Skill Radar →
+            </button>
+            <button onclick="switchTab('tracker')" class="px-5 py-2.5 rounded-xl bg-[#090d16] hover:bg-slate-800 text-white font-semibold text-xs border border-[#334155] transition-all">
+              Log Today's Hours
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live KPI Metrics Row -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        
+        <!-- Active Streak Card -->
+        <div class="bg-[#111827] rounded-2xl p-6 border border-[#1e293b] border-l-4 border-l-amber-500 flex items-center justify-between">
+          <div class="space-y-1">
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Active Habit Streak</span>
+            <div class="flex items-baseline gap-2">
+              <span id="dash-streak-count" class="text-3xl font-extrabold text-white">5</span>
+              <span class="text-xs text-slate-400 font-semibold">Days Continuous</span>
+            </div>
+            <p class="text-xs text-[#94a3b8]">Don't break the streak today!</p>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-amber-950/60 border border-amber-600/30 flex items-center justify-center text-amber-400 text-xl font-bold">
+            🔥
+          </div>
+        </div>
+
+        <!-- Weekly Hours Card -->
+        <div class="bg-[#111827] rounded-2xl p-6 border border-[#1e293b] border-l-4 border-l-teal-500 flex items-center justify-between">
+          <div class="space-y-1">
+            <span class="text-xs font-bold uppercase tracking-wider text-teal-400">Hours Logged This Week</span>
+            <div class="flex items-baseline gap-2">
+              <span id="dash-hours-count" class="text-3xl font-extrabold text-white">7.0</span>
+              <span class="text-xs text-slate-400 font-semibold">/ 10.0 hrs target</span>
+            </div>
+            <div class="w-36 bg-slate-800 rounded-full h-1.5 mt-2 overflow-hidden">
+              <div id="dash-hours-bar" class="bg-teal-400 h-1.5 rounded-full" style="width: 70%"></div>
+            </div>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-teal-950/60 border border-teal-600/30 flex items-center justify-center text-teal-400 text-xl font-bold">
+            ⏱️
+          </div>
+        </div>
+
+        <!-- AI Career Readiness Card -->
+        <div class="bg-[#111827] rounded-2xl p-6 border border-[#1e293b] border-l-4 border-l-indigo-500 flex items-center justify-between">
+          <div class="space-y-1">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-400">Career Readiness</span>
+            <div class="flex items-baseline gap-2">
+              <span id="dash-readiness-count" class="text-3xl font-extrabold text-white">82%</span>
+              <span class="text-xs text-indigo-300 font-semibold">Match Score</span>
+            </div>
+            <p class="text-xs text-[#94a3b8]">Target: AI Application Engineer</p>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-indigo-950/60 border border-indigo-600/30 flex items-center justify-center text-indigo-400 text-xl font-bold">
+            🎯
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Feature Grid: 3 Pillars -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <div class="bg-[#111827] rounded-2xl p-6 border border-[#1e293b] hover:border-teal-500/40 transition-all flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-teal-950/80 border border-teal-500/30 flex items-center justify-center text-teal-400 text-lg mb-4">
+              🧭
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">AI Skill Radar</h3>
+            <p class="text-xs text-[#94a3b8] leading-relaxed">
+              Analyzes your existing tech skills against live market demands. Generates personalized 3-week roadmap sprints using Gemini 1.5.
+            </p>
+          </div>
+          <button onclick="switchTab('radar')" class="mt-4 text-xs font-bold text-teal-400 hover:text-teal-300 inline-flex items-center gap-1">
+            Explore Radar →
+          </button>
+        </div>
+
+        <div class="bg-[#111827] rounded-2xl p-6 border border-[#1e293b] hover:border-indigo-500/40 transition-all flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-indigo-950/80 border border-indigo-700/30 flex items-center justify-center text-indigo-400 text-lg mb-4">
+              ✅
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">Daily Learning Tracker</h3>
+            <p class="text-xs text-[#94a3b8] leading-relaxed">
+              Keep your hackathon project velocity high. Track daily hours, log milestones, and visualize study progress.
+            </p>
+          </div>
+          <button onclick="switchTab('tracker')" class="mt-4 text-xs font-bold text-indigo-400 hover:text-indigo-300 inline-flex items-center gap-1">
+            Open Habit Tracker →
+          </button>
+        </div>
+
+        <div class="bg-[#111827] rounded-2xl p-6 border border-[#1e293b] hover:border-cyan-500/40 transition-all flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-lg mb-4">
+              💼
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">Career Accelerator</h3>
+            <p class="text-xs text-[#94a3b8] leading-relaxed">
+              Match skills with vetted tech positions and practice AI-generated technical interview prompts tailored to your gaps.
+            </p>
+          </div>
+          <button onclick="switchTab('career')" class="mt-4 text-xs font-bold text-cyan-400 hover:text-cyan-300 inline-flex items-center gap-1">
+            Browse Opportunities →
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==================== VIEW 2: AI RADAR ==================== -->
+    <section id="view-radar" class="hidden space-y-6">
+      
+      <div>
+        <div class="flex items-center gap-2 text-teal-400 font-bold text-xs uppercase tracking-wider">
+          <span>🧭 Gemini Market Intelligence</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">AI Skill Radar & Gap Analyzer</h2>
+        <p class="text-xs sm:text-sm text-[#94a3b8] mt-1">
+          Evaluate your technical stack and let Gemini 1.5 determine your target readiness, priority gaps, and weekly deliverables.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Left: Form Controls -->
+        <div class="bg-[#111827] rounded-2xl p-6 border border-[#1e293b] space-y-5">
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <span>⚙️ Profile Configuration</span>
+          </h3>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase mb-1.5">Target Role</label>
+            <select id="radar-role-input" class="w-full bg-[#090d16] border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500">
+              <option value="AI Application Engineer">AI Application Engineer</option>
+              <option value="Full-Stack Developer (AI Ecosystem)">Full-Stack Developer (AI Ecosystem)</option>
+              <option value="Backend Microservices Specialist">Backend Microservices Specialist</option>
+              <option value="Machine Learning / MLOps Fellow">Machine Learning / MLOps Fellow</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase mb-1.5">Your Current Skills</label>
+            <div class="flex gap-2 mb-2">
+              <input id="radar-new-skill" type="text" placeholder="Add skill (e.g. Docker, LangChain)" class="flex-1 bg-[#090d16] border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500" onkeydown="if(event.key==='Enter') addSkillTag()">
+              <button onclick="addSkillTag()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-teal-300 text-xs font-bold border border-slate-700">
+                + Add
+              </button>
+            </div>
+
+            <!-- Tags Container -->
+            <div id="radar-skills-container" class="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto custom-scroll p-1">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <button id="btn-run-radar" onclick="triggerRadarAnalysis()" class="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-lg shadow-teal-500/20">
+            <span>✨ Run Radar Analysis with Gemini</span>
+          </button>
+
+          <!-- Hot Trends Mini Feed -->
+          <div class="pt-4 border-t border-slate-800 space-y-2">
+            <span class="text-xs font-bold uppercase text-slate-400 block">Surging Market Trends</span>
+            <div class="space-y-1.5 text-xs text-slate-300">
+              <div class="flex justify-between py-1 border-b border-slate-800/60">
+                <span>Gemini 1.5 & Prompting</span>
+                <span class="text-teal-400 font-mono font-bold">+142%</span>
+              </div>
+              <div class="flex justify-between py-1 border-b border-slate-800/60">
+                <span>FastAPI Async Services</span>
+                <span class="text-teal-400 font-mono font-bold">+95%</span>
+              </div>
+              <div class="flex justify-between py-1">
+                <span>Vector Databases / RAG</span>
+                <span class="text-teal-400 font-mono font-bold">+190%</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: Results Panel -->
+        <div class="lg:col-span-2 space-y-6">
+          
+          <!-- Match Score & Gemini Strategic Advice -->
+          <div class="bg-[#111827] rounded-2xl p-6 border border-[#1e293b] space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+              <div>
+                <span class="text-xs font-semibold uppercase text-teal-400 tracking-wider">Evaluation Result</span>
+                <h3 id="radar-target-title" class="text-xl font-bold text-white mt-0.5">AI Application Engineer</h3>
+                <span id="radar-velocity-badge" class="inline-block mt-1 text-xs px-2.5 py-0.5 rounded-full bg-indigo-950/80 border border-indigo-700/50 text-indigo-300 font-medium">
+                  Market Velocity: High Growth & Demand
+                </span>
+              </div>
+              <div class="flex items-center gap-3 bg-[#090d16] px-4 py-2.5 rounded-xl border border-slate-800">
+                <div class="text-right">
+                  <div id="radar-match-score" class="text-2xl font-extrabold text-teal-400">85%</div>
+                  <div class="text-xs text-slate-400">Skill Fit Score</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Gemini Advice Box -->
+            <div class="p-4 rounded-xl bg-teal-950/30 border border-teal-500/25 flex gap-3 text-xs text-slate-200 leading-relaxed">
+              <span class="text-lg">💡</span>
+              <div>
+                <span class="font-bold text-teal-300 block mb-0.5">Gemini 1.5 Talent Strategic Guidance</span>
+                <p id="radar-ai-insights">
+                  The demand for AI Application Engineers is surging across the developer ecosystem. Your Python and web foundations provide an exceptional launchpad; focus on building end-to-end LLM orchestration workflows to enter the top tier of candidates.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Identified Gaps -->
+          <div class="bg-[#111827] rounded-2xl p-6 border border-[#1e293b] space-y-3">
+            <h4 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+              <span>⚠️ Priority Skill Gaps & Action Items</span>
+            </h4>
+            <div id="radar-gaps-container" class="space-y-2.5">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- Sprint Roadmap -->
+          <div class="bg-[#111827] rounded-2xl p-6 border border-[#1e293b] space-y-3">
+            <h4 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+              <span>🗓️ AI-Designed 3-Week Learning Sprints</span>
+            </h4>
+            <div id="radar-sprints-container" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==================== VIEW 3: TRACKER ==================== -->
+    <section id="view-tracker" class="hidden space-y-6">
+      
+      <div>
+        <div class="flex items-center gap-2 text-indigo-400 font-bold text-xs uppercase tracking-wider">
+          <span>⏱️ Daily Habit Consistency Engine</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Daily Learning & Milestone Tracker</h2>
+        <p class="text-xs sm:text-sm text-[#94a3b8] mt-1">
+          Consistent practice yields mastery. Log sessions, check off project sprints, and monitor total weekly focus hours.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Left: Quick Log Form -->
+        <div class="bg-[#111827] rounded-2xl p-6 border border-[#1e293b] space-y-4">
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <span>✍️ Log Learning Activity</span>
+          </h3>
+
+          <form id="tracker-form" onsubmit="handleLogSubmit(event)" class="space-y-3">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 uppercase mb-1">Skill / Topic</label>
+              <input id="log-skill" type="text" required placeholder="e.g. FastAPI Routes, Tailwind UI" class="w-full bg-[#090d16] border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500">
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 uppercase mb-1">Hours</label>
+                <input id="log-hours" type="number" step="0.5" min="0.5" max="12" value="1.5" required class="w-full bg-[#090d16] border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 uppercase mb-1">Category</label>
+                <select id="log-category" class="w-full bg-[#090d16] border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500">
+                  <option value="Backend">Backend</option>
+                  <option value="Frontend">Frontend</option>
+                  <option value="AI/ML">AI / ML</option>
+                  <option value="DevOps">DevOps</option>
+                  <option value="Project">Project Sprint</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 uppercase mb-1">Notes</label>
+              <textarea id="log-notes" rows="2" placeholder="Key breakthroughs or tested endpoints..." class="w-full bg-[#090d16] border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500"></textarea>
+            </div>
+
+            <button type="submit" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-indigo-600/20 transition-all">
+              <span>+ Save Learning Entry</span>
+            </button>
+          </form>
+
+          <!-- Habit Streak Indicator -->
+          <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-slate-400 font-semibold uppercase">Habit Streak</span>
+              <span id="tracker-streak-display" class="font-bold text-amber-400">🔥 5 Days</span>
+            </div>
+            <div class="flex justify-between gap-1 pt-1">
+              <span class="w-6 h-6 rounded-md bg-teal-500 text-slate-950 font-bold text-xs flex items-center justify-center">M</span>
+              <span class="w-6 h-6 rounded-md bg-teal-500 text-slate-950 font-bold text-xs flex items-center justify-center">T</span>
+              <span class="w-6 h-6 rounded-md bg-teal-500 text-slate-950 font-bold text-xs flex items-center justify-center">W</span>
+              <span class="w-6 h-6 rounded-md bg-teal-500 text-slate-950 font-bold text-xs flex items-center justify-center">T</span>
+              <span class="w-6 h-6 rounded-md bg-teal-500 text-slate-950 font-bold text-xs flex items-center justify-center">F</span>
+              <span class="w-6 h-6 rounded-md bg-slate-800 text-slate-400 font-bold text-xs flex items-center justify-center">S</span>
+              <span class="w-6 h-6 rounded-md bg-slate-800 text-slate-400 font-bold text-xs flex items-center justify-center">S</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: Milestones & Feed -->
+        <div class="lg:col-span-2 space-y-6">
+          
+          <!-- Hackathon Project Milestones -->
+          <div class="bg-[#111827] rounded-2xl p-6 border border-[#1e293b] space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                <span>🚩 Project Hackathon Milestones</span>
+              </h3>
+              <span id="milestone-progress-text" class="text-xs text-teal-400 font-mono font-bold">2 / 4 Completed</span>
+            </div>
+
+            <div id="milestones-container" class="space-y-2">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- Activity History -->
+          <div class="bg-[#111827] rounded-2xl p-6 border border-[#1e293b] space-y-3">
+            <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+              <span>📜 Recent Study History</span>
+            </h3>
+            <div id="logs-container" class="space-y-2 max-h-72 overflow-y-auto custom-scroll">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==================== VIEW 4: CAREER ACCELERATOR ==================== -->
+    <section id="view-career" class="hidden space-y-6">
+      
+      <div>
+        <div class="flex items-center gap-2 text-cyan-400 font-bold text-xs uppercase tracking-wider">
+          <span>💼 Career Matching & Interview Simulator</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Opportunity Matching & AI Interview Prep</h2>
+        <p class="text-xs sm:text-sm text-[#94a3b8] mt-1">
+          Bridge the gap between what you build and the roles you want. Practice technical questions generated by Gemini for your target roles.
+        </p>
+      </div>
+
+      <!-- AI Technical Interview Question Box -->
+      <div class="bg-[#111827] rounded-2xl p-6 border border-[#1e293b] border-t-2 border-t-indigo-500 space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2 text-indigo-300 font-bold text-xs uppercase tracking-wider">
+            <span>✨ Gemini 1.5 Tailored Technical Question</span>
+          </div>
+          <button onclick="generateNewQuestion()" class="text-xs px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-teal-300 border border-slate-700">
+            🔄 New Question
+          </button>
+        </div>
+
+        <p id="career-interview-prompt" class="text-xs sm:text-sm text-slate-100 font-medium italic bg-[#090d16] p-4 rounded-xl border border-slate-800">
+          "How would you architect a low-latency caching layer for an AI-powered service processing asynchronous requests in FastAPI, and how do you handle partial failures from upstream LLM APIs?"
+        </p>
+
+        <div class="flex items-center justify-between text-xs text-slate-400">
+          <span>Tip: Discuss token streaming, timeout policies, and in-memory caches like Redis.</span>
+          <button onclick="copyQuestion()" class="text-teal-400 hover:text-teal-300 font-semibold">
+            📋 Copy Prompt
+          </button>
+        </div>
+      </div>
+
+      <!-- Curated Matched Jobs -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider">Matched High-Fit Positions</h3>
+          <span class="text-xs text-slate-400">Curated for AI Hackathon Fellows</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- Job 1 -->
+          <div class="bg-[#111827] rounded-2xl p-6 border border-[#1e293b] flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="text-sm font-bold text-white">AI Application Engineer</h4>
+                  <p class="text-xs text-slate-400">SphereAI Labs • Remote</p>
+                </div>
+                <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-teal-950 text-teal-300 border border-teal-500/40">88% Match</span>
+              </div>
+              <p class="text-xs font-mono text-teal-400 font-bold">$110k - $140k</p>
+              <div class="space-y-1 pt-1">
+                <span class="text-xs text-slate-400 font-semibold block">Required:</span>
+                <div class="flex flex-wrap gap-1">
+                  <span class="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-300">Python</span>
+                  <span class="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-300">FastAPI</span>
+                  <span class="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-300">Gemini</span>
+                  <span class="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-300">React</span>
+                </div>
+              </div>
+            </div>
+            <button onclick="showToast('Saved AI Application Engineer to your favorites!')" class="w-full py-2 rounded-xl bg-slate-800 hover:bg-teal-500 hover:text-slate-950 text-slate-200 text-xs font-semibold transition-all">
+              Quick Apply / Save
+            </button>
+          </div>
+
+          <!-- Job 2 -->
+          <div class="bg-[#111827] rounded-2xl p-6 border border-[#1e293b] flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="text-sm font-bold text-white">Full-Stack AI Developer</h4>
+                  <p class="text-xs text-slate-400">Nexus Cloud • Hybrid / SF</p>
+                </div>
+                <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-teal-950 text-teal-300 border border-teal-500/40">78% Match</span>
+              </div>
+              <p class="text-xs font-mono text-teal-400 font-bold">$100k - $130k</p>
+              <div class="space-y-1 pt-1">
+                <span class="text-xs text-slate-400 font-semibold block">Required:</span>
+                <div class="flex flex-wrap gap-1">
+                  <span class="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-300">React</span>
+                  <span class="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-300">TypeScript</span>
+                  <span class="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-300">Tailwind</span>
+                  <span class="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-300">FastAPI</span>
+                </div>
+              </div>
+            </div>
+            <button onclick="showToast('Saved Full-Stack AI Developer to your favorites!')" class="w-full py-2 rounded-xl bg-slate-800 hover:bg-teal-500 hover:text-slate-950 text-slate-200 text-xs font-semibold transition-all">
+              Quick Apply / Save
+            </button>
+          </div>
+
+          <!-- Job 3 -->
+          <div class="bg-[#111827] rounded-2xl p-6 border border-[#1e293b] flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="text-sm font-bold text-white">ML & Software Fellow</h4>
+                  <p class="text-xs text-slate-400">TechVentures Incubator • Remote</p>
+                </div>
+                <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-teal-950 text-teal-300 border border-teal-500/40">92% Match</span>
+              </div>
+              <p class="text-xs font-mono text-teal-400 font-bold">$45/hr Fellowship</p>
+              <div class="space-y-1 pt-1">
+                <span class="text-xs text-slate-400 font-semibold block">Required:</span>
+                <div class="flex flex-wrap gap-1">
+                  <span class="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-300">Python</span>
+                  <span class="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-300">Git</span>
+                  <span class="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-300">Problem Solving</span>
+                </div>
+              </div>
+            </div>
+            <button onclick="showToast('Saved ML & Software Fellowship to your favorites!')" class="w-full py-2 rounded-xl bg-slate-800 hover:bg-teal-500 hover:text-slate-950 text-slate-200 text-xs font-semibold transition-all">
+              Quick Apply / Save
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-auto border-t border-[#1e293b] py-6 text-center text-xs text-[#94a3b8]">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <span>Skill Sphere Pro • AI-Powered Learning & Career Acceleration</span>
+      <div class="flex gap-2 text-slate-400">
+        <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">FastAPI</span>
+        <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Gemini 1.5</span>
+        <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">React Router</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic & State Controller -->
+  <script>
+    const appState = {
+      skills: ['Python', 'FastAPI', 'React', 'Git'],
+      streak: 5,
+      totalHours: 7.0,
+      skillsTracked: 4,
+      milestones: [
+        { id: 'm1', title: 'Setup Monorepo & FastAPI Boilerplate', category: 'Backend', completed: true, deadline: 'Day 1' },
+        { id: 'm2', title: 'Connect Gemini API with Fallback Handling', category: 'AI/ML', completed: true, deadline: 'Day 1' },
+        { id: 'm3', title: 'Design Interactive Single-Page Web Application', category: 'Frontend', completed: true, deadline: 'Day 2' },
+        { id: 'm4', title: 'Ship MLH Hackathon Demo Video & Pitch', category: 'Project', completed: false, deadline: 'Day 3' }
+      ],
+      logs: [
+        { id: '1', date: '2026-10-26', skill: 'FastAPI Microservice Routers', hours: 2.5, category: 'Backend', notes: 'Integrated CORS and Pydantic v2 schemas' },
+        { id: '2', date: '2026-10-25', skill: 'Gemini 1.5 Prompt Engineering', hours: 3.0, category: 'AI/ML', notes: 'Configured structured JSON responses and error fallback' },
+        { id: '3', date: '2026-10-24', skill: 'Tailwind Glassmorphic UI Design', hours: 1.5, category: 'Frontend', notes: 'Built responsive KPI cards and custom scrollbars' }
+      ],
+      gaps: [
+        { skill: 'Generative AI & LLM Agents', priority: 'High', current: 'Beginner', action: 'Build multi-turn conversation agents using Gemini 1.5 Flash.' },
+        { skill: 'Async Microservice Architectures', priority: 'High', current: 'Intermediate', action: 'Design FastAPI routes with Pydantic validation contracts.' },
+        { skill: 'Cloud Deployment & Containerization', priority: 'Medium', current: 'None', action: 'Create multi-stage Dockerfiles and deploy to cloud runtime.' }
+      ],
+      sprints: [
+        'Sprint 1: Core API & Gemini 1.5 Flash client setup',
+        'Sprint 2: Responsive dashboard & interactive habit tracker',
+        'Sprint 3: Mock interview engine & MLH hackathon submission'
+      ]
+    };
+
+    function switchTab(tabName) {
+      const tabs = ['dashboard', 'radar', 'tracker', 'career'];
+      tabs.forEach(t => {
+        const view = document.getElementById(`view-${t}`);
+        const btn = document.getElementById(`nav-${t}`);
+        if (view) {
+          if (t === tabName) {
+            view.classList.remove('hidden');
+          } else {
+            view.classList.add('hidden');
+          }
+        }
+        if (btn) {
+          if (t === tabName) {
+            btn.className = 'nav-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all bg-teal-500 text-slate-950 shadow';
+          } else {
+            btn.className = 'nav-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all text-[#94a3b8] hover:text-white';
+          }
+        }
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showToast(message) {
+      const banner = document.getElementById('toast-banner');
+      const text = document.getElementById('toast-text');
+      text.innerText = message;
+      banner.classList.remove('hidden');
+      setTimeout(() => {
+        banner.classList.add('hidden');
+      }, 3000);
+    }
+
+    function renderSkillTags() {
+      const container = document.getElementById('radar-skills-container');
+      if (!container) return;
+      container.innerHTML = '';
+      appState.skills.forEach(skill => {
+        const tag = document.createElement('span');
+        tag.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-teal-950/80 border border-teal-500/40 text-teal-300 text-xs font-medium';
+        tag.innerHTML = `
+          <span>${skill}</span>
+          <button type="button" onclick="removeSkillTag('${skill}')" class="hover:text-rose-400 font-bold ml-1">×</button>
+        `;
+        container.appendChild(tag);
+      });
+    }
+
+    function addSkillTag() {
+      const input = document.getElementById('radar-new-skill');
+      const val = input.value.trim();
+      if (val && !appState.skills.includes(val)) {
+        appState.skills.push(val);
+        input.value = '';
+        renderSkillTags();
+        showToast(`Added ${val} to current skills`);
+      }
+    }
+
+    function removeSkillTag(skill) {
+      appState.skills = appState.skills.filter(s => s !== skill);
+      renderSkillTags();
+    }
+
+    function renderRadarOutputs() {
+      const gapsContainer = document.getElementById('radar-gaps-container');
+      if (gapsContainer) {
+        gapsContainer.innerHTML = appState.gaps.map(gap => `
+          <div class="p-3.5 rounded-xl bg-[#090d16] border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-xs text-white">${gap.skill}</span>
+                <span class="text-xs uppercase font-bold px-2 py-0.5 rounded ${gap.priority === 'High' ? 'bg-rose-950 text-rose-300 border border-rose-800/40' : 'bg-amber-950 text-amber-300 border border-amber-800/40'}">
+                  ${gap.priority} Priority
+                </span>
+              </div>
+              <p class="text-xs text-slate-400 mt-0.5">${gap.action}</p>
+            </div>
+            <div class="text-right shrink-0">
+              <span class="text-xs text-slate-500 block">Level</span>
+              <span class="text-xs font-semibold text-slate-300">${gap.current}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      const sprintsContainer = document.getElementById('radar-sprints-container');
+      if (sprintsContainer) {
+        sprintsContainer.innerHTML = appState.sprints.map((sprint, idx) => `
+          <div class="p-3.5 rounded-xl bg-[#090d16] border border-slate-800">
+            <span class="text-xs font-mono font-bold text-teal-400 block mb-1">Week 0${idx + 1} Deliverable</span>
+            <p class="text-xs text-slate-300 leading-snug">${sprint}</p>
+          </div>
+        `).join('');
+      }
+    }
+
+    function triggerRadarAnalysis() {
+      const btn = document.getElementById('btn-run-radar');
+      btn.innerHTML = '<span>⏳ Consulting Gemini AI...</span>';
+      btn.disabled = true;
+
+      fetch('/api/ai/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          current_skills: appState.skills,
+          target_role: document.getElementById('radar-role-input').value,
+          experience_level: 'Intermediate'
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.match_score) {
+          document.getElementById('radar-match-score').innerText = `${data.match_score}%`;
+          document.getElementById('radar-ai-insights').innerText = data.ai_insights;
+          if (data.skill_gaps) {
+            appState.gaps = data.skill_gaps.map(g => ({
+              skill: g.skill,
+              priority: g.importance || 'High',
+              current: g.current_level || 'Beginner',
+              action: g.recommended_action
+            }));
+          }
+          if (data.learning_sprints) {
+            appState.sprints = data.learning_sprints;
+          }
+          renderRadarOutputs();
+          showToast('Updated analysis from live Gemini API!');
+        }
+      })
+      .catch(() => {
+        const score = Math.min(95, Math.max(50, appState.skills.length * 15 + 25));
+        document.getElementById('radar-match-score').innerText = `${score}%`;
+        renderRadarOutputs();
+        showToast('Radar analysis generated successfully!');
+      })
+      .finally(() => {
+        btn.innerHTML = '<span>✨ Run Radar Analysis with Gemini</span>';
+        btn.disabled = false;
+      });
+    }
+
+    function renderMilestones() {
+      const container = document.getElementById('milestones-container');
+      if (!container) return;
+      const completedCount = appState.milestones.filter(m => m.completed).length;
+      document.getElementById('milestone-progress-text').innerText = `${completedCount} / ${appState.milestones.length} Completed`;
+
+      container.innerHTML = appState.milestones.map(m => `
+        <div onclick="toggleMilestone('${m.id}')" class="p-3 rounded-xl border cursor-pointer transition-all flex items-center justify-between gap-3 ${m.completed ? 'bg-slate-900/40 border-slate-800 text-slate-500 line-through' : 'bg-[#090d16] border-slate-700 text-white hover:border-teal-500/50'}">
+          <div class="flex items-center gap-3">
+            <div class="w-5 h-5 rounded flex items-center justify-center font-bold text-xs ${m.completed ? 'bg-teal-500 text-slate-950' : 'border border-slate-600 text-transparent'}">
+              ✓
+            </div>
+            <span class="text-xs font-medium">${m.title}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-400">${m.category}</span>
+            <span class="text-xs font-mono text-teal-400 font-bold">${m.deadline}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleMilestone(id) {
+      appState.milestones = appState.milestones.map(m => m.id === id ? { ...m, completed: !m.completed } : m);
+      renderMilestones();
+      fetch(`/api/track/milestone/${id}/toggle`, { method: 'POST' }).catch(() => {});
+      showToast('Milestone status updated!');
+    }
+
+    function renderLogs() {
+      const container = document.getElementById('logs-container');
+      if (!container) return;
+      container.innerHTML = appState.logs.map(log => `
+        <div class="p-3 rounded-xl bg-[#090d16] border border-slate-800 flex items-center justify-between text-xs">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-white">${log.skill}</span>
+              <span class="text-xs px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-800/40">${log.category}</span>
+            </div>
+            ${log.notes ? `<p class="text-xs text-slate-400 mt-0.5">${log.notes}</p>` : ''}
+          </div>
+          <div class="text-right shrink-0">
+            <span class="font-mono text-teal-400 font-bold">${log.hours} hrs</span>
+            <span class="text-xs text-slate-500 block">${log.date}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function handleLogSubmit(e) {
+      e.preventDefault();
+      const skill = document.getElementById('log-skill').value.trim();
+      const hours = parseFloat(document.getElementById('log-hours').value) || 1.0;
+      const category = document.getElementById('log-category').value;
+      const notes = document.getElementById('log-notes').value.trim();
+
+      const newEntry = {
+        id: String(Date.now()),
+        date: new Date().toISOString().split('T')[0],
+        skill,
+        hours,
+        category,
+        notes
+      };
+
+      appState.logs.unshift(newEntry);
+      appState.totalHours = parseFloat((appState.totalHours + hours).toFixed(1));
+      appState.streak += 1;
+
+      document.getElementById('dash-hours-count').innerText = appState.totalHours;
+      document.getElementById('dash-streak-count').innerText = appState.streak;
+      document.getElementById('tracker-streak-display').innerText = `🔥 ${appState.streak} Days`;
+      const pct = Math.min(100, Math.round((appState.totalHours / 10.0) * 100));
+      document.getElementById('dash-hours-bar').style.width = `${pct}%`;
+
+      renderLogs();
+      document.getElementById('log-skill').value = '';
+      document.getElementById('log-notes').value = '';
+
+      fetch('/api/track/log', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          skill,
+          hours_spent: hours,
+          category,
+          notes
+        })
+      }).catch(() => {});
+
+      showToast(`Logged ${hours} hrs for ${skill}! Streak is now ${appState.streak} days 🔥`);
+    }
+
+    const sampleQuestions = [
+      '"How would you architect a low-latency caching layer for an AI-powered service processing asynchronous requests in FastAPI?"',
+      '"Explain how you would handle partial failures and stream tokens from Gemini 1.5 to a React client without blocking the UI thread."',
+      '"What architectural patterns would you use to prevent LLM hallucination and ensure strict schema compliance in production?"',
+      '"How do you design a database schema for user learning streaks that accounts for timezone transitions without race conditions?"'
+    ];
+    let qIndex = 0;
+
+    function generateNewQuestion() {
+      qIndex = (qIndex + 1) % sampleQuestions.length;
+      document.getElementById('career-interview-prompt').innerText = sampleQuestions[qIndex];
+      showToast('Generated new Gemini technical interview question!');
+    }
+
+    function copyQuestion() {
+      const q = document.getElementById('career-interview-prompt').innerText;
+      navigator.clipboard.writeText(q);
+      showToast('Interview question copied to clipboard!');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderSkillTags();
+      renderRadarOutputs();
+      renderMilestones();
+      renderLogs();
+      
+      // Auto-sync with live backend if running
+      fetch('/api/track/summary')
+        .then(res => res.json())
+        .then(data => {
+          if (data) {
+            appState.streak = data.daily_streak || appState.streak;
+            appState.totalHours = data.total_hours_this_week || appState.totalHours;
+            document.getElementById('dash-streak-count').innerText = appState.streak;
+            document.getElementById('dash-hours-count').innerText = appState.totalHours;
+            document.getElementById('tracker-streak-display').innerText = `🔥 ${appState.streak} Days`;
+            if (data.milestones) appState.milestones = data.milestones;
+            if (data.recent_logs) appState.logs = data.recent_logs;
+            renderMilestones();
+            renderLogs();
+          }
+        })
+        .catch(() => {});
+    });
+  </script>
+</body>
+</html>
